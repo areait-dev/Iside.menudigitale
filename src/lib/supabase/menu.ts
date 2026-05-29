@@ -53,9 +53,11 @@ function detectSectionType(cat: SupabaseCategory): MenuSection['type'] {
 }
 
 function isCategoryVisibleForArea(cat: SupabaseCategory, area: string) {
-  if (cat.name === 'Menu Proteico' || cat.name === 'Menu Dipendente') return false
+  if (cat.name === 'Menu Dipendente') return false
 
-  if (area === 'all') return true
+  if (area === 'all') {
+    return !EVENT_TITLES.has(cat.name) && cat.type !== 'eventi'
+  }
   if (area === 'cibo') return cat.type === 'cibo' || RESTAURANT_TITLES.has(cat.name)
   if (area === 'vini') return cat.type === 'vini' || VINI_TITLES.has(cat.name)
   if (area === 'bar') return cat.type === 'bar' || BAR_TITLES.has(cat.name)
@@ -93,7 +95,6 @@ export async function getPublicMenu(area: string): Promise<MenuDisplayItem[]> {
 
     const publicItems = items.filter(
       (row) =>
-        row.category !== 'Menu Proteico' &&
         row.category !== 'Menu Dipendente' &&
         row.display_area !== 'dipendente'
     )
@@ -162,7 +163,7 @@ function buildFromStatic(): MenuDisplayItem[] {
   const grouped = new Map<string, MenuSection[]>()
 
   for (const s of MENU_DATA) {
-    if (s.title === 'Menu Proteico' || s.title === 'Menu Dipendente') continue
+    if (s.title === 'Menu Dipendente' || EVENT_TITLES.has(s.title)) continue
 
     const groupInfo = GROUP_MAP[s.title]
     if (groupInfo) {
@@ -217,6 +218,55 @@ export async function getStaffMenu(): Promise<StaffMenuDay[]> {
       .select('id, name, description, price, day, category')
       .eq('available', true)
       .eq('category', 'Menu Proteico')
+      .order('day', { ascending: true })
+
+    if (error || !data) {
+      return []
+    }
+
+    const groupedByDay = new Map<string, StaffMenuItem[]>(DAY_ORDER.map((day) => [day, []]))
+    const otherItems: StaffMenuItem[] = []
+
+    for (const row of data) {
+      const item: StaffMenuItem = {
+        id: row.id,
+        name: row.name,
+        description: row.description ?? undefined,
+        price: row.price,
+        category: row.category,
+      }
+
+      const day = row.day?.trim() ?? ''
+      if (groupedByDay.has(day)) {
+        groupedByDay.get(day)?.push(item)
+      } else {
+        otherItems.push(item)
+      }
+    }
+
+    const result = DAY_ORDER.map((day) => ({ day, items: groupedByDay.get(day) ?? [] })).filter(
+      (entry) => entry.items.length > 0,
+    )
+
+    if (otherItems.length > 0) {
+      result.push({ day: 'Altro', items: otherItems })
+    }
+
+    return result
+  } catch {
+    return []
+  }
+}
+
+export async function getStaffDipendenteMenu(): Promise<StaffMenuDay[]> {
+  try {
+    const supabase = await createClient()
+
+    const { data, error } = await supabase
+      .from('menu_items')
+      .select('id, name, description, price, day, category')
+      .eq('available', true)
+      .eq('category', 'Menu Dipendente')
       .order('day', { ascending: true })
 
     if (error || !data) {

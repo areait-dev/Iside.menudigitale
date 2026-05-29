@@ -32,7 +32,7 @@ function renderSection(item: MenuDisplayItem) {
 }
 
 export default async function MenuPage() {
-  const items = await getPublicMenu('cibo')
+  const items = await getPublicMenu('all')
 
   return (
     <main className={`${montserrat.className} min-h-screen bg-cream`}>
