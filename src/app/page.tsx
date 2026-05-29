@@ -30,9 +30,6 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="bg-dark text-white py-6 text-center mt-16">
-        <p suppressHydrationWarning className="text-secondary">&copy; {new Date().getFullYear()} Tutti i diritti riservati</p>
-      </footer>
     </main>
   )
 }

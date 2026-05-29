@@ -74,10 +74,6 @@ export default async function MenuCiboPage() {
         )}
       </section>
 
-      <footer className="bg-dark text-white py-6 text-center mt-6 sm:mt-8">
-        <p suppressHydrationWarning className="text-secondary text-xs sm:text-sm">&copy; {new Date().getFullYear()} Tutti i diritti riservati</p>
-        <a href="/admin/login" className="text-secondary/70 text-sm mt-3 inline-block hover:text-secondary transition-colors px-4 py-2 min-h-[44px] flex items-center justify-center">Area Riservata</a>
-      </footer>
     </main>
   )
 }
