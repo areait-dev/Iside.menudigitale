@@ -1,6 +1,7 @@
 import { Montserrat } from 'next/font/google'
 import { getMenuData } from '@/lib/menu-service'
-import type { MenuSection, MenuSectionGroup } from '@/types/menu'
+import type { MenuSection, MenuSectionGroup, MenuDisplayItem } from '@/types/menu'
+import MenuNav from '@/components/menu/MenuNav'
 import WeeklyMenuCard from '@/components/menu/WeeklyMenuCard'
 import BuffetMenuCard from '@/components/menu/BuffetMenuCard'
 import StandardMenuSection from '@/components/menu/StandardMenuSection'
@@ -13,6 +14,21 @@ const montserrat = Montserrat({
 
 export const dynamic = 'force-dynamic'
 
+function renderSection(item: MenuDisplayItem) {
+  if (item.type === 'group') {
+    return <GroupedMenuSection key={item.id} group={item as MenuSectionGroup} />
+  }
+  const section = item as MenuSection
+  switch (section.type) {
+    case 'weekly':
+      return <WeeklyMenuCard key={section.id} section={section} />
+    case 'buffet':
+      return <BuffetMenuCard key={section.id} section={section} />
+    default:
+      return <StandardMenuSection key={section.id} section={section} />
+  }
+}
+
 export default async function MenuPage() {
   const items = await getMenuData()
 
@@ -24,21 +40,14 @@ export default async function MenuPage() {
         </h1>
       </header>
 
+      <MenuNav items={items} />
+
       <section className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-14">
-        {items.map((item) => {
-          if (item.type === 'group') {
-            return <GroupedMenuSection key={item.id} group={item as MenuSectionGroup} />
-          }
-          const section = item as MenuSection
-          switch (section.type) {
-            case 'weekly':
-              return <WeeklyMenuCard key={section.id} section={section} />
-            case 'buffet':
-              return <BuffetMenuCard key={section.id} section={section} />
-            default:
-              return <StandardMenuSection key={section.id} section={section} />
-          }
-        })}
+        {items.map((item) => (
+          <div key={item.id} id={`section-${item.id}`}>
+            {renderSection(item)}
+          </div>
+        ))}
       </section>
     </main>
   )
