@@ -31,25 +31,25 @@ function renderSection(item: MenuDisplayItem) {
   }
 }
 
-export default async function MenuPage() {
-  const items = await getPublicMenu('cibo')
+export default async function MenuBarPage() {
+  const items = await getPublicMenu('bar')
 
   return (
     <main className={`${montserrat.className} min-h-screen bg-cream`}>
       <header className="bg-primary text-white py-6 px-4 text-center">
         <img src="/logo.png" alt="Logo" className="h-16 sm:h-20 md:h-24 lg:h-28 mx-auto mb-2" />
-        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-secondary">Menu Ristorante</p>
+        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-secondary">Bar & Colazione</p>
       </header>
 
       <nav className="bg-secondary/20 px-4 py-3 text-center sticky top-0 z-10 backdrop-blur-sm border-b border-secondary/20">
         <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6">
-          <Link href="/menu" className="text-primary font-semibold border-b-2 border-primary pb-1 text-sm sm:text-base">
+          <Link href="/menu" className="text-gray-600 hover:text-primary transition-colors text-sm sm:text-base">
             Ristorante
           </Link>
           <Link href="/menu/eventi" className="text-gray-600 hover:text-primary transition-colors text-sm sm:text-base">
             Eventi
           </Link>
-          <Link href="/menu/bar" className="text-gray-600 hover:text-primary transition-colors text-sm sm:text-base">
+          <Link href="/menu/bar" className="text-primary font-semibold border-b-2 border-primary pb-1 text-sm sm:text-base">
             Bar & Colazione
           </Link>
           <Link href="/menu/vini" className="text-gray-600 hover:text-primary transition-colors text-sm sm:text-base">
@@ -61,7 +61,7 @@ export default async function MenuPage() {
       <section className="max-w-4xl mx-auto px-4 py-10 sm:px-6 sm:py-12">
         {items.length === 0 ? (
           <p className="text-center text-gray-500 text-sm sm:text-base md:text-lg px-4">
-            Il menu ristorante è in aggiornamento, torna presto!
+            Il menu bar è in aggiornamento, torna presto!
           </p>
         ) : (
           items.map((item) => renderSection(item))

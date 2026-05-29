@@ -8,6 +8,7 @@ interface SupabaseCategory {
   section_type?: string | null
   base_price?: number | null
   order: number
+  type?: string | null
 }
 
 interface SupabaseItem {
@@ -29,6 +30,11 @@ const GROUP_MAP: Record<string, { groupTitle: string; groupOrder: number }> = {
 
 const DAY_ORDER = ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì']
 
+const RESTAURANT_TITLES = new Set(['Antipasto', 'Primi', 'Secondi', 'Contorni', 'Insalata da comporre', 'Dolci'])
+const BAR_TITLES = new Set(['Bar & Colazione', 'Croissant', 'Crostata', 'Toast', 'Piadine'])
+const EVENT_TITLES = new Set(['Young Menu', 'Buffet'])
+const VINI_TITLES = new Set(['Vini', 'Cocktail', 'Bevande'])
+
 function toMenuItem(row: SupabaseItem): MenuItem {
   return {
     id: row.id,
@@ -46,20 +52,32 @@ function detectSectionType(cat: SupabaseCategory): MenuSection['type'] {
   return 'ala_carte'
 }
 
+function isCategoryVisibleForArea(cat: SupabaseCategory, area: string) {
+  if (cat.name === 'Menu Proteico' || cat.name === 'Menu Dipendente') return false
+
+  if (area === 'all') return true
+  if (area === 'cibo') return cat.type === 'cibo' || RESTAURANT_TITLES.has(cat.name)
+  if (area === 'vini') return cat.type === 'vini' || VINI_TITLES.has(cat.name)
+  if (area === 'bar') return cat.type === 'bar' || BAR_TITLES.has(cat.name)
+  if (area === 'eventi') {
+    return (
+      cat.type === 'eventi' ||
+      EVENT_TITLES.has(cat.name) ||
+      ['weekly', 'buffet'].includes(cat.section_type ?? '')
+    )
+  }
+  return true
+}
+
 export async function getPublicMenu(area: string): Promise<MenuDisplayItem[]> {
   try {
     const supabase = await createClient()
 
-    const categoryQuery = supabase
+    const { data: categories, error: catError } = await supabase
       .from('category_order')
-      .select('id, name, section_type, base_price, order')
+      .select('id, name, section_type, base_price, order, type')
       .order('order', { ascending: true })
 
-    if (area !== 'all') {
-      categoryQuery.eq('type', area)
-    }
-
-    const { data: categories, error: catError } = await categoryQuery
     if (catError || !categories) {
       return area === 'all' ? buildFromStatic() : []
     }
@@ -67,15 +85,21 @@ export async function getPublicMenu(area: string): Promise<MenuDisplayItem[]> {
     const { data: items, error: itemsError } = await supabase
       .from('menu_items')
       .select('id, category, name, description, price, day, available, display_area')
-      .or('display_area.is.null,display_area.ne.dipendente')
       .eq('available', true)
 
     if (itemsError || !items) {
       return area === 'all' ? buildFromStatic() : []
     }
 
+    const publicItems = items.filter(
+      (row) =>
+        row.category !== 'Menu Proteico' &&
+        row.category !== 'Menu Dipendente' &&
+        row.display_area !== 'dipendente'
+    )
+
     const itemsByCategory = new Map<string, MenuItem[]>()
-    for (const row of items) {
+    for (const row of publicItems) {
       const list = itemsByCategory.get(row.category) ?? []
       list.push(toMenuItem(row))
       itemsByCategory.set(row.category, list)
@@ -85,6 +109,8 @@ export async function getPublicMenu(area: string): Promise<MenuDisplayItem[]> {
     const grouped = new Map<string, MenuSection[]>()
 
     for (const cat of categories) {
+      if (!isCategoryVisibleForArea(cat, area)) continue
+
       const sectionItems = itemsByCategory.get(cat.name) ?? []
       if (sectionItems.length === 0) continue
 
@@ -136,6 +162,8 @@ function buildFromStatic(): MenuDisplayItem[] {
   const grouped = new Map<string, MenuSection[]>()
 
   for (const s of MENU_DATA) {
+    if (s.title === 'Menu Proteico' || s.title === 'Menu Dipendente') continue
+
     const groupInfo = GROUP_MAP[s.title]
     if (groupInfo) {
       const list = grouped.get(groupInfo.groupTitle) ?? []
@@ -187,8 +215,8 @@ export async function getStaffMenu(): Promise<StaffMenuDay[]> {
     const { data, error } = await supabase
       .from('menu_items')
       .select('id, name, description, price, day, category')
-      .or('display_area.eq.dipendente,category.eq.Menu Proteico')
       .eq('available', true)
+      .eq('category', 'Menu Proteico')
       .order('day', { ascending: true })
 
     if (error || !data) {
