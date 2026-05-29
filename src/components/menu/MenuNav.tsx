@@ -68,8 +68,8 @@ export default function MenuNav({ items }: MenuNavProps) {
 
   return (
     <div>
-      <nav className="sticky top-0 z-20 bg-iside/95 backdrop-blur-sm border-b border-stone-200 overflow-x-auto">
-        <div className="flex max-w-4xl mx-auto px-2 sm:px-4">
+      <nav className="sticky top-0 z-20 bg-iside-secondary/20 backdrop-blur-sm overflow-x-auto">
+        <div className="flex justify-center gap-3 sm:gap-4 md:gap-6 max-w-4xl mx-auto px-4 py-3">
           {TABS.map((tab) => {
             const count = grouped.get(tab.id)?.length ?? 0
             if (count === 0) return null
@@ -77,10 +77,10 @@ export default function MenuNav({ items }: MenuNavProps) {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`whitespace-nowrap px-3 sm:px-5 py-3 text-xs sm:text-sm font-bold tracking-[0.15em] uppercase transition-colors flex-shrink-0 ${
+                className={`whitespace-nowrap text-sm sm:text-base transition-colors flex-shrink-0 ${
                   activeTab === tab.id
-                    ? 'text-iside-primary border-b-2 border-iside-primary'
-                    : 'text-stone-500 hover:text-iside-primary'
+                    ? 'text-iside-primary font-semibold border-b-2 border-iside-primary pb-1'
+                    : 'text-gray-600 hover:text-iside-primary'
                 }`}
               >
                 {tab.label}
