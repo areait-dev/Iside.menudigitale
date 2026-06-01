@@ -1,7 +1,7 @@
 ﻿import { Montserrat } from 'next/font/google'
 import { getStaffDipendenteMenu } from '@/lib/supabase/menu'
 import MenuPageLayout from '@/components/menu/MenuPageLayout'
-import StandardMenuSection from '@/components/menu/StandardMenuSection'
+import EmployeeMenuSection from '@/components/menu/EmployeeMenuSection'
 import type { MenuSection } from '@/types/menu'
 
 const montserrat = Montserrat({
@@ -26,13 +26,23 @@ export default async function MenuDipendentiPage() {
   }))
 
   return (
-    <MenuPageLayout title="Menu Dipendenti" subtitle="Pagina riservata al personale, prezzo fisso 5,50€.">
+    <MenuPageLayout
+      title="Menu Dipendenti"
+      subtitle="Pagina riservata al personale, prezzo fisso 5,50€."
+      navItems={[
+        { href: '/menu/bar', label: 'Bar & Colazione' },
+        { href: '/menuristorante', label: 'Ristorante' },
+        { href: '/menu/vini', label: 'Vini & Bevande' },
+        { href: '/menu/proteico', label: 'Menu Proteico' },
+        { href: '/menudipendenti', label: 'Menu Dipendenti', active: true },
+      ]}
+    >
       {sections.length === 0 ? (
         <p className="text-center text-gray-500 text-sm sm:text-base md:text-lg px-4">
           Nessun menu dipendente disponibile al momento.
         </p>
       ) : (
-        sections.map((section) => <StandardMenuSection key={section.id} section={section} />)
+        sections.map((section) => <EmployeeMenuSection key={section.id} section={section} />)
       )}
     </MenuPageLayout>
   )

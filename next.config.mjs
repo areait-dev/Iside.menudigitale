@@ -8,11 +8,6 @@ const nextConfig = {
         destination: '/menu',
         permanent: true,
       },
-      {
-        source: '/menu/vini',
-        destination: '/menu',
-        permanent: true,
-      },
     ]
   },
   async headers() {
