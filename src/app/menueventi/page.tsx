@@ -48,6 +48,7 @@ export default async function MenuEventiPage() {
       navItems={[
         { href: '#young-menu', label: 'Young Menu' },
         { href: '#buffet', label: 'Buffet Menu' },
+        { href: '/menu/iside', label: 'Buffet ISIDE' },
       ]}
     >
       {items.length === 0 ? (
