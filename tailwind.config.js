@@ -17,7 +17,7 @@ module.exports = {
         'iside-secondary': '#4A5568',
       },
       fontFamily: {
-        serif: ['Playfair Display', 'Georgia', 'serif'],
+        serif: ['Montserrat', 'system-ui', 'sans-serif'],
         sans: ['Montserrat', 'system-ui', 'sans-serif'],
       },
     },
