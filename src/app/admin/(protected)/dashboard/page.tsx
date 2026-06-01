@@ -342,7 +342,10 @@ export default function AdminDashboard() {
 
         {/* Sections for this tab */}
         {tabCategories.map((cat) => {
-          const catItems = groupedMenu[cat.name] || []
+          const catItems = (groupedMenu[cat.name] || []).sort((a, b) => {
+            const dayOrder = (d: string) => DAYS.indexOf(d)
+            return dayOrder(a.day || '') - dayOrder(b.day || '')
+          })
           const hasDay = cat.section_type === 'weekly' || cat.section_type === 'employee'
           const showAllergens = activeTab === 'dipendente'
           const isBuffet = cat.section_type === 'buffet'
