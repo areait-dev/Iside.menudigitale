@@ -342,6 +342,7 @@ export default function AdminDashboard() {
         {tabCategories.map((cat) => {
           const catItems = groupedMenu[cat.name] || []
           const hasDay = cat.section_type === 'weekly' || cat.section_type === 'employee'
+          const showAllergens = hasDay || cat.type === 'dipendente' || cat.name === 'Menu Dipendente'
           const isBuffet = cat.section_type === 'buffet'
 
           return (
@@ -457,7 +458,7 @@ export default function AdminDashboard() {
                           <input type="checkbox" checked={itemForm.available} onChange={(e) => setItemForm({ ...itemForm, available: e.target.checked })} />
                           Disponibile
                         </label>
-                        {hasDay && (
+                        {showAllergens && (
                           <div className="space-y-2">
                             <label className="block text-xs text-stone-500 font-medium">Allergeni</label>
                             <div className="flex gap-2">
@@ -562,7 +563,7 @@ export default function AdminDashboard() {
                     <input type="checkbox" checked={itemForm.available} onChange={(e) => setItemForm({ ...itemForm, available: e.target.checked })} />
                     Disponibile
                   </label>
-                  {hasDay && (
+                  {showAllergens && (
                     <div className="space-y-2">
                       <label className="block text-xs text-stone-500 font-medium">Allergeni</label>
                       <div className="flex gap-2">
