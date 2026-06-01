@@ -29,6 +29,27 @@ function sectionId(section: MenuSection) {
   return section.title.toLowerCase().replace(/\s+/g, '-')
 }
 
+function renderSection(item: MenuDisplayItem) {
+  if (item.type === 'group') {
+    return <GroupedMenuSection key={item.id} group={item as MenuSectionGroup} />
+  }
+
+  const section = item as MenuSection
+  const id = sectionId(section)
+
+  return (
+    <section key={section.id} id={id}>
+      {section.type === 'weekly' ? (
+        <WeeklyMenuCard section={section} />
+      ) : section.type === 'buffet' ? (
+        <SimpleListSection section={section} />
+      ) : (
+        <StandardMenuSection section={section} />
+      )}
+    </section>
+  )
+}
+
 function BuffetIsideSection() {
   const categories = Object.keys(menuIside) as MenuCategory[]
 
@@ -66,34 +87,11 @@ function BuffetIsideSection() {
   )
 }
 
-function renderSection(item: MenuDisplayItem) {
-  if (item.type === 'group') {
-    return <GroupedMenuSection key={item.id} group={item as MenuSectionGroup} />
-  }
-
-  const section = item as MenuSection
-  const id = sectionId(section)
-
-  return (
-    <section key={section.id} id={id}>
-      {section.type === 'weekly' ? (
-        <WeeklyMenuCard section={section} />
-      ) : section.type === 'buffet' ? (
-        <>
-          <SimpleListSection section={section} />
-          <div className="mt-12 sm:mt-16">
-            <BuffetIsideSection />
-          </div>
-        </>
-      ) : (
-        <StandardMenuSection section={section} />
-      )}
-    </section>
-  )
-}
-
 export default async function MenuEventiPage() {
   const items = await getPublicMenu('eventi')
+  const hasBuffetSection = items.some(
+    (item) => item.type !== 'group' && (item as MenuSection).title === 'Buffet'
+  )
 
   return (
     <MenuPageLayout
@@ -108,8 +106,26 @@ export default async function MenuEventiPage() {
           Il menu eventi è in aggiornamento, torna presto!
         </p>
       ) : (
-        items.map((item) => renderSection(item))
+        items.map((item) => {
+          const section = item as MenuSection
+          if (hasBuffetSection && section.title === 'Buffet') return null
+          return renderSection(item)
+        })
       )}
+
+      <section id="buffet">
+        <div className="text-center mb-8 sm:mb-10 px-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-primary tracking-wide leading-tight">
+            Buffet Menu
+          </h2>
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mt-3">
+            <div className="h-px bg-secondary/50 w-10 sm:w-12 md:w-16" />
+            <div className="w-1.5 h-1.5 bg-secondary rounded-full flex-shrink-0" />
+            <div className="h-px bg-secondary/50 w-10 sm:w-12 md:w-16" />
+          </div>
+        </div>
+        <BuffetIsideSection />
+      </section>
     </MenuPageLayout>
   )
 }
