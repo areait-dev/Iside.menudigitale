@@ -60,11 +60,9 @@ const GRP_TITLES = new Set(['Vini', 'Cocktail', 'Bevande'])
 function tabForCat(name: string, type?: string | null): TabId | null {
   if (CUCI_TITLES.has(name)) return 'cucina'
   if (BAR_TITLES.has(name) || type === 'bar') return 'bar'
-  if (name === 'Young Menu' || type === 'eventi') return 'young'
+  if (name === 'Young Menu') return 'young'
   if (name === 'Buffet' || name === 'Buffet Menu') return 'buffet'
-  if (type === 'eventi') {
-    return name.toLowerCase().includes('buffet') ? 'buffet' : 'young'
-  }
+  if (type === 'eventi') return 'young'
   if (name === 'Menu Proteico' || type === 'proteico') return 'proteico'
   if (name === 'Menu Dipendente' || type === 'dipendente') return 'dipendente'
   if (GRP_TITLES.has(name) || type === 'vini') return 'vini'
