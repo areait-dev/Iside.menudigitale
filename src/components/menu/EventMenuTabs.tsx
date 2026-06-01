@@ -87,8 +87,8 @@ export default function EventMenuTabs({ items }: EventMenuTabsProps) {
 
   return (
     <div>
-      <nav className="bg-secondary/20 px-4 py-3 text-center sticky top-0 z-10 backdrop-blur-sm border-b border-secondary/20">
-        <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6">
+      <nav className="bg-secondary/20 px-4 py-3 text-center sticky top-0 z-10 backdrop-blur-sm border-b border-secondary/20 [width:100vw] relative left-1/2 -translate-x-1/2">
+        <div className="flex justify-between max-w-4xl mx-auto">
           <button
             onClick={() => setActiveTab('young')}
             className={`text-sm sm:text-base transition-colors ${
