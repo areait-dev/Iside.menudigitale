@@ -52,7 +52,7 @@ ANALIZZA ORA IL PIATTO: "${dishName}"
           { role: 'system', content: 'Sei un esperto HACCP conservativo e preciso.' },
           { role: 'user', content: prompt }
         ],
-        model: 'llama3-70b-8192',
+        model: 'llama-3.3-70b-versatile',
         temperature: 0,
       })
     });
