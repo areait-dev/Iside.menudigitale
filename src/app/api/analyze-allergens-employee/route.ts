@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     const { dishName, ingredients } = await request.json();
 
     const prompt = `
-Agisci come un responsabile HACCP estremamente rigoroso e conservativo.
+Agisci come un responsabile HACCP preciso.
 Analizza il seguente piatto tipico di una mensa aziendale/ristorante per dipendenti.
 
 PIATTO: "${dishName}"
@@ -20,23 +20,37 @@ INGREDIENTI DICHIARATI: ${ingredients ? JSON.stringify(ingredients) : 'Non speci
 ALLERGENI UE OBBLIGATORI (14):
 Glutine, Crostacei, Uova, Pesce, Arachidi, Soia, Latte, Frutta a guscio, Sedano, Senape, Semi di sesamo, Anidride solforosa, Lupini, Molluschi.
 
-REGOLE CRITICHE DI SICUREZZA:
-1. CONSERVATIVISMO ESTREMO: Se c'è anche solo il 1% di probabilità che un ingrediente contenga un allergene (es. "pastella" implica Glutine e spesso Uova; "panato" implica Glutine; "pesto" implica Frutta a guscio e Parmigiano/Latte), DEVI includerlo.
-2. INGREDIENTI NASCOSTI: Considera che sughi, condimenti, panature, pastelle, impanature contengono quasi sempre Glutine. I formaggi contengono Latte. Le uova sono usate nelle pastelle e nei leganti.
-3. NO ALLUCINAZIONI: Non inventare allergeni se non ragionevolmente presenti nella ricetta standard. Es: "Insalata mista" probabilmente non ha allergeni, ma se contiene crostini -> Glutine. Se contiene tonno -> Pesce.
-4. OUTPUT FORMAT: Restituisci SOLO un array JSON valido di stringhe. Nessun altro testo, nessuna spiegazione.
+REGOLE:
+1. Includi SOLO allergeni effettivamente presenti negli ingredienti del piatto. Non inventare.
+2. "Crudo" (prosciutto crudo), "Bresaola", "Salame", "Speck" sono solo carne stagionata — NON contengono Latte, Glutine, Uova, etc.
+3. "Melone", "Insalata", "Verdure grigliate", "Pomodori" freschi — NON hanno allergeni.
+4. Pastella, panato, impanato, crostini, pane, pasta, pizza, gnocchi, grissini, crackers contengono Glutine.
+5. Formaggi, panna, besciamella, burro, latte, ricotta, mozzarella, parmigiano contengono Latte.
+6. Pesto contiene Frutta a guscio e spesso Latte (Parmigiano).
+7. Uova sono in frittate, omelette, pastelle, creme, maionese.
+8. Pesce, crostacei, molluschi sono allergeni a sé stanti.
+9. NO ALLUCINAZIONI: Se un piatto è solo carne/pesce/verdure senza condimenti elaborati, probabilmente non ha allergeni.
+10. OUTPUT FORMAT: Restituisci SOLO un array JSON valido di stringhe. Mai array vuoto -> [].
 
 ESEMPIO 1:
 Input: "Pinsa con mozzarella e prosciutto cotto"
 Output: ["Glutine", "Latte"]
 
 ESEMPIO 2:
-Input: "Insalata di riso con tonno"
-Output: ["Pesce"]
+Input: "Crudo e melone"
+Output: []
 
 ESEMPIO 3:
 Input: "Pollo al pane saporito"
 Output: ["Glutine"]
+
+ESEMPIO 4:
+Input: "Bresaola, rucola e grana"
+Output: ["Latte"]
+
+ESEMPIO 5:
+Input: "Insalata mista"
+Output: []
 
 ANALIZZA ORA IL PIATTO: "${dishName}"
 `;
