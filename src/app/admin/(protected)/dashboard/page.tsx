@@ -260,7 +260,7 @@ export default function AdminDashboard() {
       </header>
 
       {/* TAB NAV — same as MenuNav */}
-      <nav className="fixed bottom-0 left-0 right-0 z-20 bg-secondary/20 backdrop-blur-sm border-t sm:border-t-0 sm:border-b border-secondary/20 overflow-x-auto sm:sticky sm:top-0 shadow-[0_-2px_8px_rgba(0,0,0,0.06)] sm:shadow-none">
+      <nav className="sticky bottom-0 z-20 bg-secondary/20 backdrop-blur-sm border-t sm:border-t-0 sm:border-b border-secondary/20 overflow-x-auto sm:sticky sm:top-0">
         <div className="flex justify-start sm:justify-center gap-3 sm:gap-4 md:gap-6 max-w-4xl mx-auto px-4 py-3">
           {TABS.map((tab) => {
             const count = sortedCategories.filter((c) => tabForCat(c.name, c.type) === tab.id).length
@@ -282,7 +282,7 @@ export default function AdminDashboard() {
         </div>
       </nav>
 
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-8 pb-24 sm:py-10 sm:pb-10">
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
         {/* Add section button */}
         <div className="flex justify-center mb-8">
           <button

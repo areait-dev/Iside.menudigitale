@@ -77,7 +77,7 @@ export default function MenuNav({ items }: MenuNavProps) {
 
   return (
     <div>
-      <nav className="fixed bottom-0 left-0 right-0 z-20 bg-secondary/20 backdrop-blur-sm border-t sm:border-t-0 sm:border-b border-secondary/20 overflow-x-auto sm:sticky sm:top-0 shadow-[0_-2px_8px_rgba(0,0,0,0.06)] sm:shadow-none">
+      <nav className="sticky bottom-0 z-20 bg-secondary/20 backdrop-blur-sm border-t sm:border-t-0 sm:border-b border-secondary/20 overflow-x-auto sm:sticky sm:top-0">
         <div className="flex justify-start sm:justify-center gap-3 sm:gap-4 md:gap-6 max-w-4xl mx-auto px-4 py-3">
           {TABS.map((tab) => {
             const count = grouped.get(tab.id)?.length ?? 0
@@ -99,7 +99,7 @@ export default function MenuNav({ items }: MenuNavProps) {
         </div>
       </nav>
 
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-12 pb-24 sm:py-16 sm:pb-16 space-y-14">
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-14">
         {(grouped.get(activeTab) ?? []).map((item) => (
           <div key={item.id}>{renderSection(item)}</div>
         ))}

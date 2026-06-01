@@ -31,7 +31,7 @@ export default function MenuPageLayout({ title, subtitle, navItems, customNav, b
       </header>
 
       {customNav || (navItems && navItems.length > 0 ? (
-        <nav className="bg-secondary/20 px-4 py-3 text-center fixed bottom-0 left-0 right-0 z-10 backdrop-blur-sm border-t sm:border-t-0 sm:border-b border-secondary/20 sm:sticky sm:top-0 shadow-[0_-2px_8px_rgba(0,0,0,0.06)] sm:shadow-none">
+        <nav className="bg-secondary/20 px-4 py-3 text-center sticky bottom-0 z-10 backdrop-blur-sm border-t sm:border-t-0 sm:border-b border-secondary/20 sm:sticky sm:top-0">
           <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6">
             {navItems.map((item) => (
               <Link
@@ -50,7 +50,7 @@ export default function MenuPageLayout({ title, subtitle, navItems, customNav, b
         </nav>
       ) : null)}
 
-      <section className="max-w-4xl mx-auto px-4 py-10 pb-20 sm:px-6 sm:py-12 sm:pb-12">
+      <section className="max-w-4xl mx-auto px-4 py-10 sm:px-6 sm:py-12">
         {children}
       </section>
     </main>
