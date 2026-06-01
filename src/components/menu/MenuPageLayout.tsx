@@ -11,11 +11,12 @@ interface MenuPageLayoutProps {
   title: string
   subtitle?: string
   navItems?: MenuNavItem[]
+  customNav?: ReactNode
   banner?: ReactNode
   children: ReactNode
 }
 
-export default function MenuPageLayout({ title, subtitle, navItems, banner, children }: MenuPageLayoutProps) {
+export default function MenuPageLayout({ title, subtitle, navItems, customNav, banner, children }: MenuPageLayoutProps) {
   return (
     <main className="min-h-screen bg-cream">
       {banner}
@@ -29,7 +30,7 @@ export default function MenuPageLayout({ title, subtitle, navItems, banner, chil
         ) : null}
       </header>
 
-      {navItems && navItems.length > 0 ? (
+      {customNav || (navItems && navItems.length > 0 ? (
         <nav className="bg-secondary/20 px-4 py-3 text-center sticky top-0 z-10 backdrop-blur-sm border-b border-secondary/20">
           <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6">
             {navItems.map((item) => (
@@ -47,7 +48,7 @@ export default function MenuPageLayout({ title, subtitle, navItems, banner, chil
             ))}
           </div>
         </nav>
-      ) : null}
+      ) : null)}
 
       <section className="max-w-4xl mx-auto px-4 py-10 sm:px-6 sm:py-12">
         {children}
