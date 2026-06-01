@@ -60,7 +60,7 @@ ANALIZZA ORA IL PIATTO: "${dishName}"
     if (!response.ok) {
       const errText = await response.text();
       console.error('Groq API error:', response.status, errText);
-      return NextResponse.json({ error: 'Errore API Groq' }, { status: 502 });
+      return NextResponse.json({ error: `Groq API: ${response.status} — ${errText.slice(0, 200)}` }, { status: 502 });
     }
 
     const data = await response.json();
