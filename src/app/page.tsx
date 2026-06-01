@@ -20,22 +20,22 @@ export default function Home() {
           Scopri il nostro menu e lasciati conquistare dai sapori autentici della nostra cucina.
         </p>
 
-        <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+        <div className="flex flex-col items-stretch gap-4 sm:flex-row sm:justify-center">
           <Link
             href="/menuristorante"
-            className="inline-block bg-primary text-white px-10 py-5 rounded-lg text-xl font-semibold hover:bg-[#003D5A] transition-colors shadow-lg"
+            className="inline-block bg-primary text-white px-10 py-5 rounded-lg text-xl font-semibold hover:bg-[#003D5A] transition-colors shadow-lg text-center"
           >
             Scopri il Menu
           </Link>
           <Link
             href="/menueventi"
-            className="inline-block bg-white text-primary px-10 py-5 rounded-lg text-xl font-semibold border border-primary hover:bg-primary/10 transition-colors shadow-lg"
+            className="inline-block bg-white text-primary px-10 py-5 rounded-lg text-xl font-semibold border border-primary hover:bg-primary/10 transition-colors shadow-lg text-center"
           >
             Menu Eventi
           </Link>
           <Link
             href="/menudipendenti"
-            className="inline-block bg-slate-900 text-white px-10 py-5 rounded-lg text-xl font-semibold hover:bg-slate-800 transition-colors shadow-lg"
+            className="inline-block bg-slate-900 text-white px-10 py-5 rounded-lg text-xl font-semibold hover:bg-slate-800 transition-colors shadow-lg text-center"
           >
             Menu Dipendenti
           </Link>
