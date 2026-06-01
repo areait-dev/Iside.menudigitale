@@ -35,8 +35,8 @@ export default function StandardMenuSection({ section }: StandardMenuSectionProp
 
           return (
             <div key={item.id}>
-              <div className="flex justify-between items-start gap-2 sm:gap-4">
-                <div className="flex-1 min-w-0 pr-2 sm:pr-4">
+              <div className="flex justify-between items-start gap-4 sm:gap-6">
+                <div className="flex-1 min-w-0 pr-4 sm:pr-6">
                   <h3 className="text-sm sm:text-base md:text-lg font-serif font-semibold text-dark tracking-wide leading-snug break-words">
                     {item.name}
                   </h3>

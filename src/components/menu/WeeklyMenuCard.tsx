@@ -32,7 +32,7 @@ export default function WeeklyMenuCard({ section }: WeeklyMenuCardProps) {
                 {item.day}
               </span>
               <div className="flex-1 min-w-0">
-                <div className="flex justify-between items-start gap-2">
+                <div className="flex justify-between items-start gap-4 sm:gap-6">
                   <h3 className="text-sm sm:text-base md:text-lg font-serif font-semibold text-dark tracking-wide leading-snug break-words">
                     {item.name}
                   </h3>

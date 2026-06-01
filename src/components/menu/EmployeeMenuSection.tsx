@@ -30,11 +30,9 @@ export default function EmployeeMenuSection({ section }: EmployeeMenuSectionProp
             <h3 className="font-serif text-primary text-sm sm:text-base font-bold tracking-widest uppercase mb-3 pb-2 border-b border-secondary/30">
               {item.day}
             </h3>
-            <div className="space-y-1.5">
-              <p className="text-gray-700 text-sm sm:text-base md:text-lg font-serif font-semibold text-dark tracking-wide leading-snug break-words">
-                {item.name}
-              </p>
-            </div>
+            <p className="text-gray-700 text-sm sm:text-base md:text-lg font-serif font-semibold text-dark tracking-wide leading-snug break-words">
+              {item.name}
+            </p>
             {item.description && (
               <p className="text-gray-500 text-xs sm:text-sm italic font-light mt-1.5 leading-snug">
                 {item.description}
