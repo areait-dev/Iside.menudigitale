@@ -1,7 +1,7 @@
 -- Migration: aggiunge categoria Buffet Menu e relativi piatti
 
-INSERT INTO category_order (name, section_type, base_price, "type", "order")
-SELECT 'Buffet Menu', 'buffet', 35.00, 'eventi', COALESCE(MAX("order") + 1, 0)
+INSERT INTO category_order (name, section_type, base_price, "order")
+SELECT 'Buffet Menu', 'buffet', 35.00, COALESCE(MAX("order") + 1, 0)
 FROM category_order;
 
 INSERT INTO menu_items (category, name, description, price) VALUES
