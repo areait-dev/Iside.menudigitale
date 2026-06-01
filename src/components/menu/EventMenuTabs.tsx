@@ -87,28 +87,30 @@ export default function EventMenuTabs({ items }: EventMenuTabsProps) {
 
   return (
     <div>
-      <div className="flex justify-center gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12">
-        <button
-          onClick={() => setActiveTab('young')}
-          className={`text-sm sm:text-base transition-colors ${
-            activeTab === 'young'
-              ? 'text-primary font-semibold border-b-2 border-primary pb-1'
-              : 'text-gray-600 hover:text-primary'
-          }`}
-        >
-          Young Menu
-        </button>
-        <button
-          onClick={() => setActiveTab('buffet')}
-          className={`text-sm sm:text-base transition-colors ${
-            activeTab === 'buffet'
-              ? 'text-primary font-semibold border-b-2 border-primary pb-1'
-              : 'text-gray-600 hover:text-primary'
-          }`}
-        >
-          Buffet Menu
-        </button>
-      </div>
+      <nav className="bg-secondary/20 px-4 py-3 text-center sticky top-0 z-10 backdrop-blur-sm border-b border-secondary/20">
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6">
+          <button
+            onClick={() => setActiveTab('young')}
+            className={`text-sm sm:text-base transition-colors ${
+              activeTab === 'young'
+                ? 'text-primary font-semibold border-b-2 border-primary pb-1'
+                : 'text-gray-600 hover:text-primary'
+            }`}
+          >
+            Young Menu
+          </button>
+          <button
+            onClick={() => setActiveTab('buffet')}
+            className={`text-sm sm:text-base transition-colors ${
+              activeTab === 'buffet'
+                ? 'text-primary font-semibold border-b-2 border-primary pb-1'
+                : 'text-gray-600 hover:text-primary'
+            }`}
+          >
+            Buffet Menu
+          </button>
+        </div>
+      </nav>
 
       {activeTab === 'young' ? (
         youngItems.length === 0 ? (
