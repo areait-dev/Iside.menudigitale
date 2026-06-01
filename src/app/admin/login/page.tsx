@@ -36,7 +36,7 @@ export default function LoginPage() {
   return (
     <main className="min-h-screen bg-cream flex items-center justify-center px-4 py-8">
       <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 w-full max-w-sm sm:max-w-md">
-        <img src="/logo.png" alt="Logo" className="h-16 sm:h-20 mx-auto mb-1 sm:mb-2" />
+        <img src="/logo-login.png" alt="ISIDE" className="h-14 sm:h-20 mx-auto mb-1 sm:mb-2" />
         <p className="text-gray-600 text-center mb-6 sm:mb-8 text-sm sm:text-base">Area Riservata</p>
 
         <form onSubmit={handleLogin} className="space-y-4">
