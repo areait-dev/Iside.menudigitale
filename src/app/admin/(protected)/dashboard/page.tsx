@@ -12,6 +12,7 @@ interface MenuItem {
   price: number
   available: boolean
   day?: string | null
+  allergens?: string[] | null
 }
 
 interface Category {
@@ -92,7 +93,7 @@ export default function AdminDashboard() {
   // item editing state
   const [editingItemId, setEditingItemId] = useState<string | null>(null)
   const [addingToCategory, setAddingToCategory] = useState<string | null>(null)
-  const [itemForm, setItemForm] = useState({ name: '', description: '', price: '', day: '', available: true })
+  const [itemForm, setItemForm] = useState({ name: '', description: '', price: '', day: '', available: true, allergens: '' })
 
   const supabase = createClient()
 
@@ -199,6 +200,9 @@ export default function AdminDashboard() {
     } else {
       data.day = null
     }
+    data.allergens = itemForm.allergens
+      ? itemForm.allergens.split(',').map((s: string) => s.trim()).filter(Boolean)
+      : []
     if (editingItemId) {
       await supabase.from('menu_items').update(data).eq('id', editingItemId)
     } else {
@@ -219,6 +223,7 @@ export default function AdminDashboard() {
       price: item.price > 0 ? item.price.toString() : '',
       day: hasDay ? (item.day || '') : '',
       available: item.available,
+      allergens: (item.allergens || []).join(', '),
     })
   }
 
@@ -231,7 +236,7 @@ export default function AdminDashboard() {
   const resetItemForm = () => {
     setEditingItemId(null)
     setAddingToCategory(null)
-    setItemForm({ name: '', description: '', price: '', day: '', available: true })
+    setItemForm({ name: '', description: '', price: '', day: '', available: true, allergens: '' })
   }
 
   const handleLogout = async () => { await supabase.auth.signOut(); window.location.href = '/admin/login' }
@@ -452,6 +457,28 @@ export default function AdminDashboard() {
                           <input type="checkbox" checked={itemForm.available} onChange={(e) => setItemForm({ ...itemForm, available: e.target.checked })} />
                           Disponibile
                         </label>
+                        {hasDay && (
+                          <div className="space-y-2">
+                            <label className="block text-xs text-stone-500 font-medium">Allergeni</label>
+                            <div className="flex gap-2">
+                              <input type="text" value={itemForm.allergens} onChange={(e) => setItemForm({ ...itemForm, allergens: e.target.value })} placeholder="Glutine, Latte, Uova..." className="flex-1 px-3 py-2 border border-stone-200 rounded-lg text-sm" />
+                              <button
+                                onClick={async () => {
+                                  const res = await fetch('/api/analyze-allergens-employee', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ dishName: itemForm.name }),
+                                  })
+                                  const data = await res.json()
+                                  if (data.allergens) setItemForm({ ...itemForm, allergens: data.allergens.join(', ') })
+                                }}
+                                className="bg-emerald-600 text-white px-3 py-2 rounded-lg text-xs font-semibold hover:bg-emerald-700 whitespace-nowrap"
+                              >
+                                AI Analizza
+                              </button>
+                            </div>
+                          </div>
+                        )}
                         <div className="flex gap-2">
                           <button onClick={() => handleSaveItem(cat.name)} disabled={!itemForm.name.trim() || (hasDay && !itemForm.day)} className="bg-primary text-white px-4 py-2 rounded-lg disabled:opacity-50 hover:bg-[#003D5A] font-semibold">Salva</button>
                           <button onClick={resetItemForm} className="bg-stone-200 px-4 py-2 rounded-lg hover:bg-stone-300">Annulla</button>
@@ -492,6 +519,15 @@ export default function AdminDashboard() {
                           </span>
                         )}
                       </div>
+                      {item.allergens && item.allergens.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mt-2">
+                          {item.allergens.map((a) => (
+                            <span key={a} className="text-[10px] uppercase tracking-wider bg-amber-50 text-amber-800 border border-amber-200 rounded-full px-2 py-0.5 font-medium">
+                              {a}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                       <div className="flex items-center gap-3 mt-1.5">
                         <button onClick={() => handleEditItem(item)} className="text-xs text-stone-400 hover:text-primary">Modifica</button>
                         <button onClick={() => handleDeleteItem(item.id)} className="text-xs text-red-400 hover:text-red-600">Elimina</button>
@@ -526,6 +562,28 @@ export default function AdminDashboard() {
                     <input type="checkbox" checked={itemForm.available} onChange={(e) => setItemForm({ ...itemForm, available: e.target.checked })} />
                     Disponibile
                   </label>
+                  {hasDay && (
+                    <div className="space-y-2">
+                      <label className="block text-xs text-stone-500 font-medium">Allergeni</label>
+                      <div className="flex gap-2">
+                        <input type="text" value={itemForm.allergens} onChange={(e) => setItemForm({ ...itemForm, allergens: e.target.value })} placeholder="Glutine, Latte, Uova..." className="flex-1 px-3 py-2 border border-stone-200 rounded-lg text-sm" />
+                        <button
+                          onClick={async () => {
+                            const res = await fetch('/api/analyze-allergens-employee', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ dishName: itemForm.name }),
+                            })
+                            const data = await res.json()
+                            if (data.allergens) setItemForm({ ...itemForm, allergens: data.allergens.join(', ') })
+                          }}
+                          className="bg-emerald-600 text-white px-3 py-2 rounded-lg text-xs font-semibold hover:bg-emerald-700 whitespace-nowrap"
+                        >
+                          AI Analizza
+                        </button>
+                      </div>
+                    </div>
+                  )}
                   <div className="flex gap-2">
                     <button onClick={() => handleSaveItem(cat.name)} disabled={!itemForm.name.trim() || (hasDay && !itemForm.day)} className="bg-primary text-white px-4 py-2 rounded-lg disabled:opacity-50 hover:bg-[#003D5A] font-semibold">Aggiungi</button>
                     <button onClick={resetItemForm} className="bg-stone-200 px-4 py-2 rounded-lg hover:bg-stone-300">Annulla</button>
