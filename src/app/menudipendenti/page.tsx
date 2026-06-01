@@ -17,10 +17,9 @@ export default async function MenuDipendentiPage() {
     id: `dipendente-${day.day.toLowerCase().replace(/\s+/g, '-')}`,
     title: day.day,
     type: 'employee',
-    basePrice: 5.5,
     items: day.items.map((item) => ({
       ...item,
-      price: 5.5,
+      price: null,
     })),
     order: 0,
   }))
@@ -28,12 +27,8 @@ export default async function MenuDipendentiPage() {
   return (
     <MenuPageLayout
       title="Menu Dipendenti"
-      subtitle="Pagina riservata al personale, prezzo fisso 5,50€."
+      subtitle="Menu riservato al personale — prezzo fisso € 5,50"
       navItems={[
-        { href: '/menu/bar', label: 'Bar & Colazione' },
-        { href: '/menuristorante', label: 'Ristorante' },
-        { href: '/menu/vini', label: 'Vini & Bevande' },
-        { href: '/menu/proteico', label: 'Menu Proteico' },
         { href: '/menudipendenti', label: 'Menu Dipendenti', active: true },
       ]}
     >
