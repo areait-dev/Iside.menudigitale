@@ -18,10 +18,10 @@ export const dynamic = 'force-dynamic'
 
 const categoryLabels: Record<MenuCategory, string> = {
   aperitivo: 'Aperitivo',
-  primi: 'Primi',
-  carne: 'Carne',
-  fritti: 'Fritti',
-  contorni: 'Contorni',
+  primi: 'Isola dei Primi',
+  carne: 'Isola della Carne',
+  fritti: 'Isola dei Fritti',
+  contorni: 'Isola dei Contorni',
   bevande: 'Bevande',
 }
 
