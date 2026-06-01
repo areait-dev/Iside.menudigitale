@@ -34,7 +34,7 @@ export default function MenuPageLayout({ title, subtitle, navItems, customNav, b
         <div className="order-last sm:order-none">{customNav}</div>
       )}
       {navItems && navItems.length > 0 && !customNav && (
-        <nav className="bg-secondary/20 px-4 py-3 text-center order-last sm:order-none sm:sticky sm:top-0 sm:z-10 backdrop-blur-sm border-b border-secondary/20">
+        <nav className="bg-[#ECE4D4] px-4 py-3 text-center order-last sm:order-none sm:sticky sm:top-0 sm:z-10 sm:bg-secondary/20 backdrop-blur-sm border-b border-secondary/20">
           <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6">
             {navItems.map((item) => (
               <Link

@@ -260,7 +260,7 @@ export default function AdminDashboard() {
       </header>
 
       {/* TAB NAV — same as MenuNav */}
-      <nav className="bg-secondary/20 backdrop-blur-sm border-b border-secondary/20 overflow-x-auto order-last sm:order-none sm:sticky sm:top-0 sm:z-10">
+      <nav className="bg-[#ECE4D4] backdrop-blur-sm border-b border-secondary/20 overflow-x-auto order-last sm:order-none sm:sticky sm:top-0 sm:z-10 sm:bg-secondary/20">
         <div className="flex justify-start sm:justify-center gap-3 sm:gap-4 md:gap-6 max-w-4xl mx-auto px-4 py-3">
           {TABS.map((tab) => {
             const count = sortedCategories.filter((c) => tabForCat(c.name, c.type) === tab.id).length
