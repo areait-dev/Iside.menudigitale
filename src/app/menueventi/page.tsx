@@ -29,6 +29,43 @@ function sectionId(section: MenuSection) {
   return section.title.toLowerCase().replace(/\s+/g, '-')
 }
 
+function BuffetIsideSection() {
+  const categories = Object.keys(menuIside) as MenuCategory[]
+
+  return (
+    <div className="space-y-10 sm:space-y-12">
+      {categories.map((category) => (
+        <div key={category}>
+          <div className="text-center mb-5 sm:mb-6 px-2">
+            <h3 className="text-lg sm:text-xl md:text-2xl font-serif text-primary tracking-wide leading-tight">
+              {categoryLabels[category]}
+            </h3>
+            <div className="h-px bg-secondary/30 w-12 mx-auto mt-2" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+            {menuIside[category].map((item) => (
+              <div
+                key={item.id}
+                className="bg-white rounded-lg shadow-sm border border-secondary/10 px-4 py-3 sm:px-5 sm:py-3.5"
+              >
+                <p className="text-sm sm:text-base md:text-lg font-serif text-dark tracking-wide leading-snug">
+                  {item.name}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <div className="text-center">
+        <p className="text-sm text-gray-400 italic">
+          * Il menu può variare in base alla disponibilità del momento.
+        </p>
+      </div>
+    </div>
+  )
+}
+
 function renderSection(item: MenuDisplayItem) {
   if (item.type === 'group') {
     return <GroupedMenuSection key={item.id} group={item as MenuSectionGroup} />
@@ -42,7 +79,12 @@ function renderSection(item: MenuDisplayItem) {
       {section.type === 'weekly' ? (
         <WeeklyMenuCard section={section} />
       ) : section.type === 'buffet' ? (
-        <SimpleListSection section={section} />
+        <>
+          <SimpleListSection section={section} />
+          <div className="mt-12 sm:mt-16">
+            <BuffetIsideSection />
+          </div>
+        </>
       ) : (
         <StandardMenuSection section={section} />
       )}
@@ -52,7 +94,6 @@ function renderSection(item: MenuDisplayItem) {
 
 export default async function MenuEventiPage() {
   const items = await getPublicMenu('eventi')
-  const categories = Object.keys(menuIside) as MenuCategory[]
 
   return (
     <MenuPageLayout
@@ -69,37 +110,6 @@ export default async function MenuEventiPage() {
       ) : (
         items.map((item) => renderSection(item))
       )}
-
-      <div className="space-y-10 sm:space-y-12 mt-10 sm:mt-12">
-        {categories.map((category) => (
-          <div key={category}>
-            <div className="text-center mb-5 sm:mb-6 px-2">
-              <h3 className="text-lg sm:text-xl md:text-2xl font-serif text-primary tracking-wide leading-tight">
-                {categoryLabels[category]}
-              </h3>
-              <div className="h-px bg-secondary/30 w-12 mx-auto mt-2" />
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-              {menuIside[category].map((item) => (
-                <div
-                  key={item.id}
-                  className="bg-white rounded-lg shadow-sm border border-secondary/10 px-4 py-3 sm:px-5 sm:py-3.5"
-                >
-                  <p className="text-sm sm:text-base md:text-lg font-serif text-dark tracking-wide leading-snug">
-                    {item.name}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-
-        <div className="text-center">
-          <p className="text-sm text-gray-400 italic">
-            * Il menu può variare in base alla disponibilità del momento.
-          </p>
-        </div>
-      </div>
     </MenuPageLayout>
   )
 }
