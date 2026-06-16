@@ -4,12 +4,11 @@ import { NextResponse, type NextRequest } from 'next/server'
 export async function middleware(request: NextRequest) {
   const url = new URL(request.url)
 
-  // Force no-cache for menu pages
+  // Force no-cache for menu pages - Rimosso Clear-Site-Data per correggere il crash su dispositivi mobile
   if (url.pathname.startsWith('/menu')) {
     const response = NextResponse.next({ request })
     response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0')
     response.headers.set('CDN-Cache-Control', 'no-store')
-    response.headers.set('Clear-Site-Data', '"cache"')
     response.headers.set('Pragma', 'no-cache')
     response.headers.set('Expires', '0')
     return response
