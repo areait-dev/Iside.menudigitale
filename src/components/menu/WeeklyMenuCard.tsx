@@ -8,7 +8,7 @@ interface WeeklyMenuCardProps {
 
 export default function WeeklyMenuCard({ section }: WeeklyMenuCardProps) {
   return (
-    <div>
+    <div className="mb-8 sm:mb-10 md:mb-14">
       <div className="text-center mb-5 sm:mb-6 md:mb-8 px-2">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-serif text-primary tracking-wide leading-tight">
           {section.title}

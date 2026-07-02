@@ -8,7 +8,7 @@ interface GroupedMenuSectionProps {
 
 export default function GroupedMenuSection({ group }: GroupedMenuSectionProps) {
   return (
-    <div>
+    <div className="mb-8 sm:mb-10 md:mb-14">
       <div className="text-center mb-5 sm:mb-6 md:mb-8 px-2">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-serif text-primary tracking-wide leading-tight">
           {group.title}
@@ -21,8 +21,8 @@ export default function GroupedMenuSection({ group }: GroupedMenuSectionProps) {
       </div>
 
       {group.sections.map((section, idx) => (
-        <div key={section.id} className={idx > 0 ? 'mt-8 sm:mt-10' : ''}>
-          <h3 className="font-serif text-primary/70 text-xs sm:text-sm font-bold tracking-[0.15em] uppercase mb-3 sm:mb-4 px-2 sm:px-0">
+        <div key={section.id} className={idx > 0 ? 'mt-8 sm:mt-10 md:mt-14' : ''}>
+          <h3 className="font-serif text-primary/70 text-xs sm:text-sm font-bold tracking-[0.15em] uppercase mb-5 sm:mb-6 md:mb-8 px-2 sm:px-0">
             {section.title}
           </h3>
           <div className="space-y-4 sm:space-y-5 md:space-y-6 px-2 sm:px-0">

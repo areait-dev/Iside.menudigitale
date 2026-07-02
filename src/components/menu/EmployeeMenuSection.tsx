@@ -8,7 +8,7 @@ interface EmployeeMenuSectionProps {
 
 export default function EmployeeMenuSection({ section }: EmployeeMenuSectionProps) {
   return (
-    <div>
+    <div className="mb-8 sm:mb-10 md:mb-14">
       <div className="text-center mb-5 sm:mb-6 md:mb-8 px-2">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-serif text-primary tracking-wide leading-tight">
           {section.title}
@@ -24,7 +24,7 @@ export default function EmployeeMenuSection({ section }: EmployeeMenuSectionProp
           <div className="h-px bg-secondary/50 w-10 sm:w-12 md:w-16" />
         </div>
       </div>
-      <div className="space-y-6 sm:space-y-7 px-2 sm:px-0">
+      <div className="space-y-4 sm:space-y-5 md:space-y-6 px-2 sm:px-0">
         {section.items.map((item) => (
           <div key={item.id}>
             <h3 className="font-serif text-primary text-sm sm:text-base font-bold tracking-widest uppercase mb-3 pb-2 border-b border-secondary/30">
@@ -34,7 +34,7 @@ export default function EmployeeMenuSection({ section }: EmployeeMenuSectionProp
               {item.name}
             </p>
             {item.description && (
-              <p className="text-gray-500 text-xs sm:text-sm italic font-light mt-1.5 leading-snug">
+              <p className="text-gray-500 text-xs sm:text-sm md:text-base italic font-light mt-0.5 sm:mt-1 leading-snug">
                 {item.description}
               </p>
             )}
