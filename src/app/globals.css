@@ -13,4 +13,19 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: 'Montserrat', system-ui, sans-serif;
+  scrollbar-color: #004F71 var(--background);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #004F71;
+  border-radius: 6px;
+  border: 3px solid var(--background);
 }
