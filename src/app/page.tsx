@@ -33,12 +33,6 @@ export default function Home() {
           >
             Menu Eventi
           </Link>
-          <Link
-            href="/menudipendenti"
-            className="inline-block bg-slate-900 text-white px-10 py-5 rounded-lg text-xl font-semibold hover:bg-slate-800 transition-colors shadow-lg text-center"
-          >
-            Menu Dipendenti
-          </Link>
         </div>
       </section>
 
