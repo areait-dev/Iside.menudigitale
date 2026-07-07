@@ -64,6 +64,7 @@ function isCategoryVisibleForArea(cat: SupabaseCategory, area: string) {
       !EVENT_TITLES.has(cat.name) &&
       !BAR_TITLES.has(cat.name) &&
       !VINI_TITLES.has(cat.name) &&
+      !['weekly', 'buffet'].includes(cat.section_type ?? '') &&
       (cat.type === 'cibo' || RESTAURANT_TITLES.has(cat.name))
     )
   }

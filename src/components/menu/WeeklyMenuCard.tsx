@@ -1,6 +1,7 @@
 'use client'
 
 import type { MenuSection } from '@/types/menu'
+import AllergenTags from '@/components/menu/AllergenTags'
 
 interface WeeklyMenuCardProps {
   section: MenuSection
@@ -48,13 +49,7 @@ export default function WeeklyMenuCard({ section }: WeeklyMenuCardProps) {
                   </p>
                 )}
                 {item.allergens && item.allergens.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mt-1.5">
-                    {item.allergens.map((a) => (
-                      <span key={a} className="text-[10px] uppercase tracking-wider text-stone-400 border border-stone-200 rounded-full px-1.5 py-0.5 leading-none">
-                        {a}
-                      </span>
-                    ))}
-                  </div>
+                  <AllergenTags allergens={item.allergens} />
                 )}
               </div>
             </div>
