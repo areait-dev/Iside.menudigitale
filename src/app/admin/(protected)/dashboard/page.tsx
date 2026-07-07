@@ -25,10 +25,9 @@ interface Category {
 }
 
 const SECTION_TYPES = [
-  { value: 'ala_carte', label: 'Standard' },
-  { value: 'weekly', label: 'Settimanale' },
+  { value: 'ala_carte', label: 'Menu Ristorante' },
   { value: 'buffet', label: 'Buffet' },
-  { value: 'employee', label: 'Employee' },
+  { value: 'employee', label: 'Menu dipendenti' },
 ] as const
 
 const CATEGORY_TYPES = [
@@ -58,15 +57,17 @@ const CUCI_TITLES = new Set(['Antipasto', 'Primi', 'Secondi', 'Contorni', 'Insal
 const BAR_TITLES = new Set(['Bar & Colazione', 'Croissant', 'Crostata', 'Toast', 'Piadine'])
 const GRP_TITLES = new Set(['Vini', 'Cocktail', 'Bevande'])
 
-function tabForCat(name: string, type?: string | null): TabId | null {
+function tabForCat(name: string, type?: string | null, sectionType?: string | null): TabId | null {
   if (CUCI_TITLES.has(name)) return 'cucina'
   if (BAR_TITLES.has(name) || type === 'bar') return 'bar'
   if (name === 'Young Menu') return 'young'
-  if (name === 'Buffet' || name === 'Buffet Menu') return 'buffet'
+  if (name === 'Buffet' || name === 'Buffet Menu' || sectionType === 'buffet') return 'buffet'
   if (type === 'eventi') return 'young'
   if (name === 'Menu Proteico' || type === 'proteico') return 'proteico'
   if (name === 'Menu Dipendente' || type === 'dipendente') return 'dipendente'
   if (GRP_TITLES.has(name) || type === 'vini') return 'vini'
+  if (type === 'cibo') return 'cucina'
+  console.warn('Sezione senza tab assegnato:', name, type, sectionType)
   return null
 }
 
@@ -115,7 +116,7 @@ export default function AdminDashboard() {
 
   const sortedCategories = [...categories].sort((a, b) => a.order - b.order)
 
-  const tabCategories = sortedCategories.filter((c) => tabForCat(c.name, c.type) === activeTab)
+  const tabCategories = sortedCategories.filter((c) => tabForCat(c.name, c.type, c.section_type) === activeTab)
 
   // Category CRUD
   const handleAddCategory = async () => {
@@ -130,7 +131,8 @@ export default function AdminDashboard() {
     if (newCategoryType === 'weekly' && newCategoryBasePrice) {
       payload.base_price = parseFloat(newCategoryBasePrice)
     }
-    const { data } = await supabase.from('category_order').insert([payload]).select().single()
+    const { data, error } = await supabase.from('category_order').insert([payload]).select().single()
+    if (error) console.error('handleAddCategory error:', JSON.stringify(error, null, 2), error.message, error.code, error.details, error.hint)
     if (data) {
       setCategories([...categories, data])
       setNewCategoryName('')
@@ -153,9 +155,11 @@ export default function AdminDashboard() {
     } else {
       payload.base_price = null
     }
-    await supabase.from('category_order').update(payload).eq('id', id)
+    const { error: catUpdateError } = await supabase.from('category_order').update(payload).eq('id', id)
+    if (catUpdateError) console.error('handleUpdateCategory (category_order) error:', catUpdateError)
     if (editingCategoryName.trim() !== old.name) {
-      await supabase.from('menu_items').update({ category: editingCategoryName.trim() }).eq('category', old.name)
+      const { error: itemsUpdateError } = await supabase.from('menu_items').update({ category: editingCategoryName.trim() }).eq('category', old.name)
+      if (itemsUpdateError) console.error('handleUpdateCategory (menu_items) error:', itemsUpdateError)
     }
     setCategories(categories.map(c => c.id === id ? { ...c, ...payload, base_price: payload.base_price ?? null } as Category : c))
     setMenuItems(menuItems.map(i => i.category === old.name ? { ...i, category: editingCategoryName.trim() } : i))
@@ -204,9 +208,11 @@ export default function AdminDashboard() {
       ? itemForm.allergens.split(',').map((s: string) => s.trim()).filter(Boolean)
       : []
     if (editingItemId) {
-      await supabase.from('menu_items').update(data).eq('id', editingItemId)
+      const { error } = await supabase.from('menu_items').update(data).eq('id', editingItemId)
+      if (error) console.error('handleSaveItem (update) error:', error)
     } else {
-      await supabase.from('menu_items').insert([data])
+      const { error } = await supabase.from('menu_items').insert([data])
+      if (error) console.error('handleSaveItem (insert) error:', error)
     }
     resetItemForm()
     fetchData()
@@ -559,7 +565,7 @@ export default function AdminDashboard() {
               ) : (
                 <div className="text-center mt-4">
                   <button
-                    onClick={() => { setAddingToCategory(cat.name); resetItemForm() }}
+                    onClick={() => { resetItemForm(); setAddingToCategory(cat.name) }}
                     className="text-primary hover:opacity-70 text-sm font-semibold"
                   >
                     + Aggiungi piatto
