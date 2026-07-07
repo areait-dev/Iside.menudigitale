@@ -309,7 +309,10 @@ export default function AdminDashboard() {
             />
             <select
               value={newCategoryType}
-              onChange={(e) => setNewCategoryType(e.target.value)}
+              onChange={(e) => {
+                setNewCategoryType(e.target.value)
+                if (e.target.value === 'employee') setNewCategoryMenuType('dipendente')
+              }}
               className="w-full px-3 py-2 border border-stone-200 rounded-lg text-base bg-white"
             >
               {SECTION_TYPES.map((t) => (
@@ -367,7 +370,10 @@ export default function AdminDashboard() {
                     />
                     <select
                       value={editingCategoryType}
-                      onChange={(e) => setEditingCategoryType(e.target.value)}
+                      onChange={(e) => {
+                        setEditingCategoryType(e.target.value)
+                        if (e.target.value === 'employee') setEditingCategoryMenuType('dipendente')
+                      }}
                       className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm bg-white"
                     >
                       {SECTION_TYPES.map((t) => (
