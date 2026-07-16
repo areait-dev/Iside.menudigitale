@@ -136,7 +136,7 @@ export const MENU_DATA: MenuSection[] = [
     order: 10,
     items: [
       { id: uid(), name: 'Torta di mela', price: 3.00, allergens: ['Glutine', 'Uova', 'Latte'] },
-      { id: uid(), name: 'Torta di ricotta e pera', price: 3.00, allergens: ['Glutine', 'Uova', 'Latte'] },
+      { id: uid(), name: 'Torta di ricotta e pera', price: 3.00, allergens: ['Glutine', 'Uova', 'Latte', 'Frutta a guscio', 'Anidride solforosa e solfiti'] },
       { id: uid(), name: 'Crostata di frutta', price: 3.00, allergens: ['Glutine', 'Uova', 'Latte'] },
       { id: uid(), name: 'Crostata ai frutti rossi', price: 3.00, allergens: ['Glutine', 'Uova', 'Latte'] },
       { id: uid(), name: 'Gelato confezionato', description: 'Vari prezzi', price: 0.00, allergens: ['Latte', 'Frutta a guscio'] },
