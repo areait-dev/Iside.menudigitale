@@ -25,13 +25,13 @@ export default function Home() {
             href="/menuristorante"
             className="inline-block bg-primary text-white px-10 py-5 rounded-lg text-xl font-semibold hover:bg-[#003D5A] transition-colors shadow-lg text-center"
           >
-            Scopri il Menu Ristorante
+            Menu Ristorante
           </Link>
           <Link
             href="/menu/bar"
             className="inline-block bg-white text-primary px-10 py-5 rounded-lg text-xl font-semibold border border-primary hover:bg-primary/10 transition-colors shadow-lg text-center"
           >
-            Scopri il Menu Bar
+            Menu Bar
           </Link>
           <Link
             href="/menueventi"
