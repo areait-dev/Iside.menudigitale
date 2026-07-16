@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
-
 :root {
   --background: #F5F2ED;
   --foreground: #002A3F;
@@ -12,7 +10,7 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Montserrat', system-ui, sans-serif;
+  font-family: 'Gotham', system-ui, sans-serif;
   scrollbar-color: #004F71 var(--background);
 }
 
