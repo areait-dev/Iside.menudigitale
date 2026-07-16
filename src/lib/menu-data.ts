@@ -51,7 +51,7 @@ export const MENU_DATA: MenuSection[] = [
     order: 3,
     items: [
       { id: uid(), name: 'Pomodori e capperi', price: 4.00, allergens: [] },
-      { id: uid(), name: 'Patate al forno', price: 4.00, allergens: [] },
+      { id: uid(), name: 'Patate al forno', price: 4.00, allergens: ['Latte'] },
       { id: uid(), name: 'Verdure grigliate', description: 'Zucchine, melanzana, pomodoro', price: 5.00, allergens: [] },
       { id: uid(), name: 'Insalata di finocchio', price: 3.00, allergens: [] },
       { id: uid(), name: 'Insalata di cetriolo', price: 3.00, allergens: [] },
