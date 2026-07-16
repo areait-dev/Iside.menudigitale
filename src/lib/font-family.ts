@@ -11,6 +11,7 @@ export const montserrat = localFont({
     { path: '../../public/lib/font-family/GothamBook.ttf', weight: '400', style: 'normal' },
     { path: '../../public/lib/font-family/GothamBookItalic.ttf', weight: '400', style: 'italic' },
     { path: '../../public/lib/font-family/GothamBook.ttf', weight: '500', style: 'normal' },
+    { path: '../../public/lib/font-family/GothamBook.ttf', weight: '600', style: 'normal' },
     { path: '../../public/lib/font-family/GothamBold.ttf', weight: '700', style: 'normal' },
     { path: '../../public/lib/font-family/GothamBoldItalic.ttf', weight: '700', style: 'italic' },
     { path: '../../public/lib/font-family/Gotham-Black.otf', weight: '900', style: 'normal' },
