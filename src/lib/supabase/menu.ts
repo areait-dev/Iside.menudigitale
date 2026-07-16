@@ -220,6 +220,7 @@ export interface StaffMenuItem {
   description?: string
   price: number | null
   category: string
+  allergens?: string[]
 }
 
 export interface StaffMenuDay {
@@ -233,7 +234,7 @@ export async function getStaffMenu(): Promise<StaffMenuDay[]> {
 
     const { data, error } = await supabase
       .from('menu_items')
-      .select('id, name, description, price, day, category')
+      .select('id, name, description, price, day, category, allergens')
       .eq('available', true)
       .eq('category', 'Menu Proteico')
       .order('day', { ascending: true })
@@ -252,6 +253,7 @@ export async function getStaffMenu(): Promise<StaffMenuDay[]> {
         description: row.description ?? undefined,
         price: row.price,
         category: row.category,
+        allergens: row.allergens ?? undefined,
       }
 
       const day = row.day?.trim() ?? ''
@@ -282,7 +284,7 @@ export async function getStaffDipendenteMenu(): Promise<StaffMenuDay[]> {
 
     const { data, error } = await supabase
       .from('menu_items')
-      .select('id, name, description, price, day, category')
+      .select('id, name, description, price, day, category, allergens')
       .eq('available', true)
       .eq('category', 'Menu Dipendente')
       .order('day', { ascending: true })
@@ -301,6 +303,7 @@ export async function getStaffDipendenteMenu(): Promise<StaffMenuDay[]> {
         description: row.description ?? undefined,
         price: row.price,
         category: row.category,
+        allergens: row.allergens ?? undefined,
       }
 
       const day = row.day?.trim() ?? ''

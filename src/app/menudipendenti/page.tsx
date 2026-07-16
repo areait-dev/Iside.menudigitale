@@ -42,6 +42,7 @@ export default async function MenuDipendentiPage() {
         description: item.description,
         price: null,
         day: day.day,
+        allergens: item.allergens,
       }))
     ),
     order: 0,
