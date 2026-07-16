@@ -1,12 +1,7 @@
 import type { Metadata, Viewport } from 'next'
-import { Montserrat } from 'next/font/google'
 import './globals.css'
 import Footer from '@/components/Footer'
-
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  display: 'swap',
-})
+import { montserrat } from '@/lib/font-family'
 
 export const metadata: Metadata = {
   title: 'ISIDE - Menu Digitale',

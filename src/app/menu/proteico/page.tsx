@@ -1,16 +1,10 @@
-﻿import { Montserrat } from 'next/font/google'
-import { getPublicMenu } from '@/lib/supabase/menu'
+﻿import { getPublicMenu } from '@/lib/supabase/menu'
 import MenuPageLayout from '@/components/menu/MenuPageLayout'
 import WeeklyMenuCard from '@/components/menu/WeeklyMenuCard'
 import SimpleListSection from '@/components/menu/SimpleListSection'
 import StandardMenuSection from '@/components/menu/StandardMenuSection'
 import EmployeeMenuSection from '@/components/menu/EmployeeMenuSection'
 import type { MenuDisplayItem, MenuSection, MenuSectionGroup } from '@/types/menu'
-
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  display: 'swap',
-})
 
 export const dynamic = 'force-dynamic'
 

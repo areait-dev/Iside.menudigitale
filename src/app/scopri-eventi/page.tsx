@@ -1,10 +1,5 @@
 import Link from 'next/link'
-import { Montserrat } from 'next/font/google'
-
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  display: 'swap',
-})
+import { montserrat } from '@/lib/font-family'
 
 export default function ScopriEventiPage() {
   return (
