@@ -190,11 +190,11 @@ export const MENU_DATA: MenuSection[] = [
     basePrice: 5.50,
     order: 13,
     items: [
-      { id: uid(), name: 'Crudo e melone', price: null, day: 'Lunedì', allergens: [] },
-      { id: uid(), name: 'Piatto Iside: crostino di pane di segale, salmone mais e avocado', price: null, day: 'Martedì', allergens: ['Glutine', 'Pesce'] },
-      { id: uid(), name: 'Insalata di riso con tonno', price: null, day: 'Mercoledì', allergens: ['Pesce'] },
-      { id: uid(), name: 'Pollo al pane saporito e insalata di ciliegino', price: null, day: 'Giovedì', allergens: ['Glutine'] },
-      { id: uid(), name: 'Pinsa con mozzarella e prosciutto cotto all\'uscita', price: null, day: 'Venerdì', allergens: ['Glutine', 'Latte'] },
+      { id: uid(), name: 'Zuppetta fredda di zucchina lunga', description: 'Con patate e pomodorino', price: null, day: 'Lunedì', allergens: [] },
+      { id: uid(), name: 'Insalata di riso', price: null, day: 'Martedì', allergens: [] },
+      { id: uid(), name: 'Pollo saporito con ciliegino', price: null, day: 'Mercoledì', allergens: [] },
+      { id: uid(), name: 'Pinsa', description: 'Margherita o con prosciutto crudo', price: null, day: 'Giovedì', allergens: ['Glutine', 'Latte'] },
+      { id: uid(), name: 'Insalata con il tonno', price: null, day: 'Venerdì', allergens: ['Pesce'] },
     ],
   },
   {
