@@ -1,4 +1,3 @@
-import Link from 'next/link'
 
 const socialLinks = [
   {
@@ -49,11 +48,6 @@ export default function Footer() {
             {link.svg}
           </a>
         ))}
-      </div>
-      <div className="flex justify-center gap-3 sm:gap-4 text-xs sm:text-sm">
-        <Link href="/privacy" className="text-secondary hover:text-white transition-colors">Privacy Policy</Link>
-        <span className="text-gray-500">|</span>
-        <Link href="/cookie" className="text-secondary hover:text-white transition-colors">Cookie Policy</Link>
       </div>
     </footer>
   )
