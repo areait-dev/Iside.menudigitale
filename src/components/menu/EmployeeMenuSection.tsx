@@ -10,21 +10,23 @@ interface EmployeeMenuSectionProps {
 export default function EmployeeMenuSection({ section }: EmployeeMenuSectionProps) {
   return (
     <div className="mb-8 sm:mb-10 md:mb-14">
-      <div className="text-center mb-5 sm:mb-6 md:mb-8 px-2">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-serif text-primary tracking-wide leading-tight">
-          {section.title}
-          {section.basePrice != null && (
-            <span className="text-primary/60 ml-3 text-lg sm:text-xl md:text-2xl font-normal italic">
-              € {section.basePrice.toFixed(2)}
-            </span>
-          )}
-        </h2>
-        <div className="flex items-center justify-center gap-2 sm:gap-3 mt-2">
-          <div className="h-px bg-secondary/50 w-10 sm:w-12 md:w-16" />
-          <div className="w-1.5 h-1.5 bg-secondary rounded-full flex-shrink-0" />
-          <div className="h-px bg-secondary/50 w-10 sm:w-12 md:w-16" />
+      {(section.title || section.basePrice != null) && (
+        <div className="text-center mb-5 sm:mb-6 md:mb-8 px-2">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-serif text-primary tracking-wide leading-tight">
+            {section.title}
+            {section.basePrice != null && (
+              <span className="text-primary/60 ml-3 text-lg sm:text-xl md:text-2xl font-normal italic">
+                € {section.basePrice.toFixed(2)}
+              </span>
+            )}
+          </h2>
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mt-2">
+            <div className="h-px bg-secondary/50 w-10 sm:w-12 md:w-16" />
+            <div className="w-1.5 h-1.5 bg-secondary rounded-full flex-shrink-0" />
+            <div className="h-px bg-secondary/50 w-10 sm:w-12 md:w-16" />
+          </div>
         </div>
-      </div>
+      )}
       <div className="space-y-4 sm:space-y-5 md:space-y-6 px-2 sm:px-0">
         {section.items.map((item) => (
           <div key={item.id}>

@@ -32,8 +32,8 @@ export default async function MenuDipendentiPage() {
 
   const sections: MenuDisplayItem[] = [{
     id: 'dipendente',
-    title: 'Menu Dipendenti',
-    basePrice: 5.5,
+    title: '',
+    basePrice: undefined,
     type: 'employee' as const,
     items: menuByDay.flatMap((day) =>
       day.items.map((item) => ({
@@ -50,11 +50,7 @@ export default async function MenuDipendentiPage() {
 
   return (
     <MenuPageLayout
-      title="Menu Dipendenti"
-      subtitle="Menu riservato al personale — prezzo fisso € 5,50"
-      navItems={[
-        { href: '/menudipendenti', label: 'Menu Dipendenti', active: true },
-      ]}
+      title="Menu — € 5,50"
     >
       {sections.length === 0 ? (
         <p className="text-center text-gray-500 text-sm sm:text-base md:text-lg px-4">
